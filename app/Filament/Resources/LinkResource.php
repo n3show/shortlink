@@ -49,6 +49,10 @@ class LinkResource extends Resource
                     ->label('Оригинальный URL')
                     ->limit(40)
                     ->tooltip(fn (Link $record): string => $record->original_url),
+                TextColumn::make('clicks_count')
+                    ->label('Переходов')
+                    ->sortable()
+                    ->badge(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -84,6 +88,7 @@ class LinkResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->where('user_id', Auth::id());
+            ->where('user_id', Auth::id())
+            ->withCount('clicks');
     }
 }
