@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Link extends Model
 {
@@ -22,5 +23,12 @@ class Link extends Model
     public function clicks(): HasMany
     {
         return $this->hasMany(Click::class);
+    }
+
+    protected function shortUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => url('/'.$this->short_code),
+        );
     }
 }
