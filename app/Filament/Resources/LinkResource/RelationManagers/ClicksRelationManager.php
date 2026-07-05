@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ClicksRelationManager extends RelationManager
 {
     protected static string $relationship = 'clicks';
+    protected static ?string $title = 'Переходы';
 
     public function form(Form $form): Form
     {

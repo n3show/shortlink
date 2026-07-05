@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Placeholder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
@@ -32,6 +33,12 @@ class LinkResource extends Resource
                     ->url()
                     ->required()
                     ->maxLength(2048)
+                    ->columnSpanFull(),
+
+                Placeholder::make('short_url')
+                    ->label('Короткая ссылка')
+                    ->content(fn (?Link $record): string => $record?->short_url ?? '—')
+                    ->visible(fn (string $operation): bool => $operation === 'edit')
                     ->columnSpanFull(),
             ]);
     }
